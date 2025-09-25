@@ -45,7 +45,7 @@ export function AppSidebar() {
       <SidebarContent className="bg-sidebar">
         {/* Logo Section */}
         <div className="flex items-center gap-3 p-4 border-b border-sidebar-border">
-          <img src={natachatLogo} alt="Natachat AI" className="w-8 h-8" />
+          <img src={natachatLogo} alt="Natachat AI" className={isCollapsed? "w-8 h-4" : "w-8 h-7"} />
           {!isCollapsed && (
             <div className="flex items-center gap-1">
               <span className="font-semibold text-sidebar-foreground">Natachat</span>
