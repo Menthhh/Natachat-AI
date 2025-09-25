@@ -57,6 +57,16 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        gray: {
+          background: "hsl(var(--gray-background))",
+        },
+      },
+      backgroundImage: {
+        "gradient-red": "var(--gradient-red)",
+      },
+      boxShadow: {
+        soft: "var(--shadow-soft)",
+        medium: "var(--shadow-medium)",
       },
       borderRadius: {
         lg: "var(--radius)",
