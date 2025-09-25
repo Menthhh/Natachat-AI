@@ -6,12 +6,29 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import natachatLogo from "@/assets/natachat-logo.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!username || !password) {
+      setError("Please enter both username and password.");
+    } else {
+      setError("");
+
+      alert("Login clicked!\nUsername: " + username + "\nPassword: " + password);
+      navigate("/chat");
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-red flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-red-600 via-red-400 to-white flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-medium">
         <CardHeader className="text-center pb-4">
           <div className="flex items-center justify-center gap-3 mb-2">
@@ -24,49 +41,60 @@ export default function Login() {
           <p className="text-muted-foreground">Please login to continue</p>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="Enter your username"
-              className="h-11"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
               <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                className="h-11 pr-10"
+                id="username"
+                type="text"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                className="h-11"
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
-              >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
-              </button>
             </div>
-          </div>
 
-          <div className="flex items-center space-x-2">
-            <Checkbox id="remember" />
-            <Label htmlFor="remember" className="text-sm">
-              Remember me
-            </Label>
-          </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="h-11 pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  tabIndex={-1}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+            </div>
 
-          <Button className="w-full h-11 bg-primary hover:bg-primary/90">
-            Login
-          </Button>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="remember" />
+              <Label htmlFor="remember" className="text-sm">
+                Remember me
+              </Label>
+            </div>
+
+            {error && (
+              <div className="text-destructive text-sm">{error}</div>
+            )}
+
+            <Button type="submit" className="w-full h-11 bg-primary hover:bg-primary/90">
+              Login
+            </Button>
+          </form>
         </CardContent>
       </Card>
     </div>
